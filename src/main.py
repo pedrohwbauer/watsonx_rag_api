@@ -1,11 +1,14 @@
 
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
+class Answer(BaseModel):
+    content: str
 
-@app.get("/seek")
-def read_root():
-    return {"content": "aaaaaaaaaaaaaaaaa"}
+@app.post("/seek")
+async def seek(query: str) -> Answer:
+    return Answer(content=f'Answer to "{query}"')
 
 
